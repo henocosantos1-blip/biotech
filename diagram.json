@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "author": "Adaptado para CCS",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-uno", "id": "uno", "top": 120, "left": -50, "attrs": {} },
+    {
+      "type": "wokwi-slide-potentiometer",
+      "id": "sensor_co2",
+      "top": -81.4,
+      "left": 248.6,
+      "attrs": { "label": "Sensor CO2" }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo_captura",
+      "top": -204.4,
+      "left": -256.4,
+      "rotate": 180,
+      "attrs": { "label": "Servo Captura (Pino 9)" }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo_injecao",
+      "top": -329.2,
+      "left": -266,
+      "rotate": 180,
+      "attrs": { "label": "Servo Injecao (Pino 10)" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_azul",
+      "top": 180,
+      "left": 300,
+      "attrs": { "color": "blue", "label": "Seguro" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_amarelo",
+      "top": 240,
+      "left": 300,
+      "attrs": { "color": "yellow", "label": "Atenção" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_vermelho",
+      "top": 300,
+      "left": 300,
+      "attrs": { "color": "red", "label": "Crítico" }
+    },
+    { "type": "wokwi-resistor", "id": "r1", "top": 190, "left": 210, "attrs": { "value": "220" } },
+    { "type": "wokwi-resistor", "id": "r2", "top": 250, "left": 210, "attrs": { "value": "220" } },
+    { "type": "wokwi-resistor", "id": "r3", "top": 310, "left": 210, "attrs": { "value": "220" } }
+  ],
+  "connections": [
+    [ "uno:GND.1", "sensor_co2:GND", "black", [ "v0" ] ],
+    [ "uno:5V", "sensor_co2:VCC", "red", [ "v0" ] ],
+    [ "uno:A0", "sensor_co2:SIG", "green", [ "v0" ] ],
+    [ "uno:GND.1", "servo_captura:GND", "black", [ "v0" ] ],
+    [ "uno:5V", "servo_captura:VCC", "red", [ "v0" ] ],
+    [ "uno:9", "servo_captura:PWM", "orange", [ "v0" ] ],
+    [ "uno:GND.1", "servo_injecao:GND", "black", [ "v0" ] ],
+    [ "uno:5V", "servo_injecao:VCC", "red", [ "v0" ] ],
+    [ "uno:10", "servo_injecao:PWM", "orange", [ "v0" ] ],
+    [ "uno:11", "r1:1", "blue", [ "v0" ] ],
+    [ "r1:2", "led_azul:A", "blue", [ "v0" ] ],
+    [ "uno:GND.2", "led_azul:C", "black", [ "v0" ] ],
+    [ "uno:12", "r2:1", "yellow", [ "v0" ] ],
+    [ "r2:2", "led_amarelo:A", "yellow", [ "v0" ] ],
+    [ "uno:GND.2", "led_amarelo:C", "black", [ "v0" ] ],
+    [ "uno:13", "r3:1", "red", [ "v0" ] ],
+    [ "r3:2", "led_vermelho:A", "red", [ "v0" ] ],
+    [ "uno:GND.2", "led_vermelho:C", "black", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}

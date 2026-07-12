@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCS — Sistema de Captura e Armazenamento de Carbono</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="atmosphere"></div>
+
+    <div class="container">
+
+        <header class="hero">
+            <p class="eyebrow">Projeto Escolar · Engenharia Ambiental</p>
+            <h1>Captura e Armazenamento<br>de Carbono <span>(CCS)</span></h1>
+            <p class="hero-sub">
+                Um protótipo funcional em Arduino que reproduz, em escala e com sensores adaptados,
+                como uma planta de <strong>Captura Direta de Ar (DAC)</strong> monitora o CO₂ atmosférico,
+                aciona seus coletores e, no limite, injeta o gás capturado em rocha porosa no subsolo.
+            </p>
+        </header>
+
+        <!-- ===================== O QUE É CCS ===================== -->
+        <section class="card intro-card">
+            <h2>O que é CCS?</h2>
+            <p>
+                CCS (<em>Carbon Capture and Storage</em>) é o nome dado ao conjunto de tecnologias que capturam
+                dióxido de carbono antes que ele se acumule na atmosfera — ou diretamente do ar já emitido —
+                e o armazenam de forma permanente, geralmente em formações rochosas profundas. Existem quatro
+                rotas principais de captura, que se diferenciam pelo <strong>ponto do processo</strong> em que o
+                CO₂ é removido:
+            </p>
+
+        <div class="routes">
+            <div class="route" data-route="1" role="button" tabindex="0">
+                <span class="route-tag">Rota 1</span>
+                <h3>Pré-combustão</h3>
+                <p>O combustível é convertido em gás de síntese (H₂ + CO₂) antes de ser queimado. O CO₂ é
+                    separado dessa mistura, e apenas o hidrogênio segue para a combustão. Usado em usinas de
+                    gaseificação de carvão.</p>
+            </div>
+            <div class="route" data-route="2" role="button" tabindex="0">
+                <span class="route-tag">Rota 2</span>
+                <h3>Pós-combustão</h3>
+                <p>Os gases de exaustão de uma planta já em operação passam por um sistema de absorção
+                    química que remove o CO₂ depois da queima. É a rota mais fácil de adaptar a fábricas e
+                    usinas existentes.</p>
+            </div>
+            <div class="route" data-route="3" role="button" tabindex="0">
+                <span class="route-tag">Rota 3</span>
+                <h3>Oxicombustão</h3>
+                <p>O combustível é queimado em oxigênio quase puro em vez de ar comum, gerando um fluxo de
+                    exaustão majoritariamente composto por CO₂ — o que simplifica bastante a separação.</p>
+            </div>
+            <div class="route active" data-route="4" role="button" tabindex="0">
+                <span class="route-tag">Rota do protótipo</span>
+                <h3>DAC — Captura Direta de Ar</h3>
+                <p>Remove CO₂ diretamente do ar ambiente, não de uma chaminé específica. Pode ser instalada
+                    em qualquer lugar, mas exige mais energia por tonelada capturada, já que o CO₂ está muito
+                    mais diluído no ar (~0,04%) do que num gás de exaustão industrial (5–15%). É esta a
+                    tecnologia que nosso circuito representa.</p>
+            </div>
+        </div>
+        </section>
+
+        <!-- ===================== SIMULADOR + EXPLICAÇÃO ===================== -->
+        <div class="grid">
+            <div class="card">
+                <h2>Status do Sistema <span class="live-tag">tempo real</span></h2>
+            
+                <div class="slider-container">
+                    <label for="co2-range">
+                        Simulador de Concentração de CO₂ <span class="pin-tag">Sensor · A0</span>
+                    </label>
+                    <div class="reading"><span id="co2-val">420</span><span class="unit">ppm</span></div>
+                    <input type="range" min="350" max="1200" value="420" class="slider" id="co2-range">
+                    <div class="scale-labels">
+                        <span>350 — Limpo</span>
+                        <span>450 — Alerta</span>
+                        <span>800 — Crítico</span>
+                        <span>1200</span>
+                    </div>
+                </div>
+            
+                <div class="status-box" id="status-seguro">
+                    <div>
+                        <strong>Qualidade do Ar: Seguro</strong>
+                        <span class="detail">Níveis atmosféricos normais (~420 ppm). Sistema em standby.</span>
+                    </div>
+                    <div class="indicator" id="led-seguro"></div>
+                </div>
+            
+                <div class="status-box" id="status-atencao">
+                    <div>
+                        <strong>Captura Ativa: Filtragem em Processo</strong>
+                        <span class="detail">Válvula de Captura (Servo · pino 9) aberta para adsorção química.</span>
+                    </div>
+                    <div class="indicator" id="led-atencao"></div>
+                </div>
+            
+                <div class="status-box" id="status-critico">
+                    <div>
+                        <strong>Injeção Crítica: Compressão Geológica</strong>
+                        <span class="detail">Válvula de Injeção (Servo · pino 10) aberta para estocagem subterrânea.</span>
+                    </div>
+                    <div class="indicator" id="led-critico"></div>
+                </div>
+            
+                <p class="footnote">
+                    A escala do simulador é calibrada para valores realistas de CO₂ atmosférico. No protótipo físico com Arduino, a leitura de tensão analógica (0 a 1023) é convertida para a escala de 350 a 1200 ppm.
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>Como o Sistema Funciona?</h2>
+                <p>Selecione um componente para entender a relação entre a maquete e o sistema real de DAC:</p>
+
+                <div class="interactive-diagram">
+                    <button class="component-btn active" data-target="sensor">
+                        <span class="btn-num">01</span> Sensor de CO₂ <em>(sensor de umidade)</em>
+                    </button>
+                    <button class="component-btn" data-target="servo1">
+                        <span class="btn-num">02</span> Válvula de Captura <em>(servo · pino 9)</em>
+                    </button>
+                    <button class="component-btn" data-target="servo2">
+                        <span class="btn-num">03</span> Válvula de Injeção <em>(servo · pino 10)</em>
+                    </button>
+                    <button class="component-btn" data-target="leds">
+                        <span class="btn-num">04</span> LEDs de Controle <em>(pinos 11, 12, 13)</em>
+                    </button>
+                </div>
+
+                <div id="explanation-box">
+                    Selecione um item acima para ler a explicação correspondente.
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== VISTA ISOMÉTRICA (elemento assinatura) ===================== -->
+        <!-- ===================== VISTA ISOMÉTRICA (elemento assinatura) ===================== -->
+        <section class="card">
+            <h2>Vista Isométrica da Instalação</h2>
+            <p>
+                Esta é a maquete conceitual da planta de DAC: o muro de ventiladores puxa o ar através dos
+                filtros, o tanque comprime o gás capturado, e um poço leva o CO₂ até a rocha de
+                armazenamento no subsolo. O marcador acompanha o estado do simulador acima.
+            </p>
+            <div class="cross-section-wrap">
+                <svg id="cross-section" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vista isométrica da instalação de captura e injeção de carbono">
+        
+                    <!-- ===== bloco de terreno (isométrico) ===== -->
+                    <polygon points="130,460 480,660 480,900 130,700" class="gnd-left" />
+                    <polygon points="480,660 830,460 830,700 480,900" class="gnd-right" />
+                    <polygon points="480,260 830,460 480,660 130,460" class="gnd-top" />
+        
+                    <!-- janela de corte / reservatório subterrâneo -->
+                    <polygon points="655,560 795,480 795,720 655,800" class="reservoir" id="reservoir" />
+                    <path d="M 655,600 C 700,585 720,615 760,595 C 780,585 790,600 795,592" class="reservoir-crack" />
+                    <g id="mineral-dots" opacity="0">
+                        <circle cx="700" cy="650" r="4" class="mineral" />
+                        <circle cx="730" cy="680" r="4" class="mineral" />
+                        <circle cx="760" cy="630" r="4" class="mineral" />
+                        <circle cx="690" cy="720" r="4" class="mineral" />
+                        <circle cx="745" cy="710" r="4" class="mineral" />
+                    </g>
+        
+                    <!-- poço de injeção -->
+                    <line x1="725" y1="520" x2="725" y2="655" class="injection-pipe" id="injection-pipe" />
+                    <circle cx="725" cy="514" r="8" class="well-cap" />
+        
+                    <!-- ===== tubulações de ligação ===== -->
+                    <path d="M 590,430 C 545,430 545,470 520,470" class="pipe-loop" />
+                    <path d="M 650,380 C 690,380 690,440 700,460 C 705,470 710,490 710,520" class="pipe-loop" />
+                    <path d="M 520,420 L 590,420" class="pipe-transfer" id="pipe-transfer" />
+        
+                    <!-- ===== muro de ventiladores (fan wall) ===== -->
+                    <polygon points="330,330 520,330 560,295 370,295" class="facility-roof" />
+                    <polygon points="520,330 560,295 560,485 520,520" class="facility-side" />
+                    <rect x="330" y="330" width="190" height="190" rx="4" class="facility-front" />
+                    <g class="louvers">
+                        <line x1="530" y1="320" x2="550" y2="303" class="louver" />
+                        <line x1="530" y1="370" x2="550" y2="353" class="louver" />
+                        <line x1="530" y1="420" x2="550" y2="403" class="louver" />
+                        <line x1="530" y1="470" x2="550" y2="453" class="louver" />
+                    </g>
+                    <g id="fan-grid">
+                        <circle cx="354" cy="354" r="17" class="fan" />
+                        <circle cx="401" cy="354" r="17" class="fan" />
+                        <circle cx="448" cy="354" r="17" class="fan" />
+                        <circle cx="495" cy="354" r="17" class="fan" />
+                        <circle cx="354" cy="401" r="17" class="fan" />
+                        <circle cx="401" cy="401" r="17" class="fan" />
+                        <circle cx="448" cy="401" r="17" class="fan" />
+                        <circle cx="495" cy="401" r="17" class="fan" />
+                        <circle cx="354" cy="448" r="17" class="fan" />
+                        <circle cx="401" cy="448" r="17" class="fan" />
+                        <circle cx="448" cy="448" r="17" class="fan" />
+                        <circle cx="495" cy="448" r="17" class="fan" />
+                        <circle cx="354" cy="495" r="17" class="fan" />
+                        <circle cx="401" cy="495" r="17" class="fan" />
+                        <circle cx="448" cy="495" r="17" class="fan" />
+                        <circle cx="495" cy="495" r="17" class="fan" />
+                    </g>
+                    <text x="425" y="545" class="facility-label" text-anchor="middle">Coletores DAC</text>
+        
+                    <!-- ===== chaminé / torre de exaustão ===== -->
+                    <rect x="450" y="150" width="30" height="145" class="stack-body" />
+                    <line x1="450" y1="185" x2="480" y2="185" class="stack-rung" />
+                    <line x1="450" y1="225" x2="480" y2="225" class="stack-rung" />
+                    <line x1="450" y1="265" x2="480" y2="265" class="stack-rung" />
+                    <rect x="443" y="105" width="44" height="52" rx="6" class="stack-cap" />
+        
+                    <!-- ===== tanque de compressão ===== -->
+                    <ellipse cx="620" cy="350" rx="30" ry="13" class="tank-cap" />
+                    <rect x="590" y="350" width="60" height="170" rx="10" class="tank-body" />
+                    <rect x="590" y="400" width="60" height="14" class="tank-band" />
+                    <rect x="590" y="460" width="60" height="14" class="tank-band" />
+                    <text x="620" y="545" class="facility-label" text-anchor="middle">Compressão</text>
+        
+                    <!-- ===== marcador de CO2 ===== -->
+                    <circle id="co2-marker" cx="465" cy="90" r="9" class="co2-marker" />
+                    <text id="co2-marker-label" x="482" y="94" class="marker-label">CO₂</text>
+        
+                    <!-- ===== textos de identificação (posicionados no topo para evitar sobreposição) ===== -->
+                    <text x="30" y="60" class="facility-label">Atmosfera</text>
+                    <text x="810" y="475" class="facility-label" text-anchor="end">Formação basáltica</text>
+                    <text x="810" y="495" class="facility-label" text-anchor="end">≈ 1.000–2.000 m</text>
+                </svg>
+            </div>
+            <p class="footnote">
+                Em projetos reais como o <strong>CarbFix</strong> (Islândia), o CO₂ dissolvido em água é
+                injetado em rocha basáltica e reage com minerais como o cálcio e o magnésio, transformando-se
+                em carbonato sólido — a <strong>mineralização</strong> — em poucos anos, o que torna o
+                armazenamento praticamente permanente e reduz o risco de vazamento.
+            </p>
+        </section>
+
+        <!-- ===================== FLUXOGRAMA ===================== -->
+        <section class="card">
+            <h2>Processo de Fluxo do Carbono</h2>
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="node" id="node-entrada">Atmosfera Livre</div>
+                    <span class="node-caption">CO₂ diluído no ar (~0,04%)</span>
+                </div>
+                <div class="arrow" id="arrow1">➔</div>
+                <div class="flow-step">
+                    <div class="node" id="node-filtro">Coletores &amp; Filtros (DAC)</div>
+                    <span class="node-caption">Sorção química em KOH ou amina</span>
+                </div>
+                <div class="arrow" id="arrow2">➔</div>
+                <div class="flow-step">
+                    <div class="node" id="node-compressor">Compressão do Gás</div>
+                    <span class="node-caption">Regeneração térmica + compressão &gt;100 bar</span>
+                </div>
+                <div class="arrow" id="arrow3">➔</div>
+                <div class="flow-step">
+                    <div class="node" id="node-deposito">Rocha Porosa (Subsolo)</div>
+                    <span class="node-caption">Injeção e mineralização</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== TABELA DE EQUIVALÊNCIA ===================== -->
+        <section class="card">
+            <h2>Protótipo ↔ Sistema Real</h2>
+            <p>Tabela de referência técnica: cada componente do circuito no Wokwi e o que ele representa
+                fisicamente numa planta de captura direta de ar.</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Componente no protótipo</th>
+                            <th>Pino</th>
+                            <th>Representa</th>
+                            <th>Função no sistema real</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sensor de umidade de solo</td>
+                            <td>A0</td>
+                            <td>Sensor de gás NDIR / fotoacústico</td>
+                            <td>Mede a concentração de CO₂ no ar, em ppm</td>
+                        </tr>
+                        <tr>
+                            <td>Servo — Captura</td>
+                            <td>9</td>
+                            <td>Ventiladores + comportas dos coletores</td>
+                            <td>Empurram o ar através do material sorvente</td>
+                        </tr>
+                        <tr>
+                            <td>Servo — Injeção</td>
+                            <td>10</td>
+                            <td>Válvula do poço de injeção</td>
+                            <td>Libera o CO₂ comprimido na formação rochosa</td>
+                        </tr>
+                        <tr>
+                            <td>LED azul</td>
+                            <td>11</td>
+                            <td>Painel de monitoramento (MRV) — status normal</td>
+                            <td>Indica operação padrão, sem captura ativa</td>
+                        </tr>
+                        <tr>
+                            <td>LED amarelo</td>
+                            <td>12</td>
+                            <td>Painel de monitoramento (MRV) — status captura</td>
+                            <td>Indica coletores em operação</td>
+                        </tr>
+                        <tr>
+                            <td>LED vermelho</td>
+                            <td>13</td>
+                            <td>Painel de monitoramento (MRV) — status crítico</td>
+                            <td>Indica ciclo de compressão e injeção ativo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===================== CONTEXTO E LIMITAÇÕES ===================== -->
+        <section class="card context-card">
+            <h2>Por que isso importa — e onde estão os limites</h2>
+            <div class="context-grid">
+                <div>
+                    <h3>Por que investir em CCS</h3>
+                    <p>
+                        Cenários de neutralidade de carbono discutidos por órgãos como o IPCC não dependem apenas
+                        de reduzir novas emissões — também é necessário remover ativamente parte do CO₂ já
+                        lançado na atmosfera. CCS, combinado a fontes de energia renovável, é uma das poucas
+                        tecnologias capazes de gerar remoção líquida de carbono em larga escala.
+                    </p>
+                </div>
+                <div>
+                    <h3>Limitações e críticas</h3>
+                    <p>
+                        O custo por tonelada capturada em DAC ainda é elevado, e o processo demanda bastante
+                        energia — especialmente na etapa de regeneração térmica do sorvente. É preciso também
+                        encontrar locais com geologia adequada para armazenamento seguro, e monitorar
+                        continuamente para evitar vazamentos. Por fim, parte da comunidade científica alerta que
+                        CCS pode ser usado para prolongar o uso de combustíveis fósseis, em vez de substituí-los
+                        por fontes limpas.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <p><code> · Eduardo Mascarenhas · Henoc Santos · João Pedro de Sousa · Lucas Silva · Maria Eduarda Carneiro · </code></p>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
