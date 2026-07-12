@@ -18,7 +18,7 @@
     <div class="container">
 
         <header class="hero">
-            <p class="eyebrow">BIOTECNOLOGIA</p>
+            <p class="eyebrow">FEIRA DE BIOTECNOLOGIA</p>
             <h1>Captura e Armazenamento<br>de Carbono <span>(CCS)</span></h1>
             <p class="hero-sub">
                 Um protótipo funcional em Arduino que reproduz, em escala e com sensores adaptados,
@@ -38,43 +38,45 @@
                 CO₂ é removido:
             </p>
 
-        <div class="routes">
-            <div class="route" data-route="1" role="button" tabindex="0">
-                <span class="route-tag">Rota 1</span>
-                <h3>Pré-combustão</h3>
-                <p>O combustível é convertido em gás de síntese (H₂ + CO₂) antes de ser queimado. O CO₂ é
-                    separado dessa mistura, e apenas o hidrogênio segue para a combustão. Usado em usinas de
-                    gaseificação de carvão.</p>
+            <div class="routes">
+                <div class="route" data-route="1" role="button" tabindex="0">
+                    <span class="route-tag">Rota 1</span>
+                    <h3>Pré-combustão</h3>
+                    <p>O combustível é convertido em gás de síntese (H₂ + CO₂) antes de ser queimado. O CO₂ é
+                        separado dessa mistura, e apenas o hidrogênio segue para a combustão. Usado em usinas de
+                        gaseificação de carvão.</p>
+                </div>
+                <div class="route" data-route="2" role="button" tabindex="0">
+                    <span class="route-tag">Rota 2</span>
+                    <h3>Pós-combustão</h3>
+                    <p>Os gases de exaustão de uma planta já em operação passam por um sistema de absorção
+                        química que remove o CO₂ depois da queima. É a rota mais fácil de adaptar a fábricas e
+                        usinas existentes.</p>
+                </div>
+                <div class="route" data-route="3" role="button" tabindex="0">
+                    <span class="route-tag">Rota 3</span>
+                    <h3>Oxicombustão</h3>
+                    <p>O combustível é queimado em oxigênio quase puro em vez de ar comum, gerando um fluxo de
+                        exaustão majoritariamente composto por CO₂ — o que simplifica bastante a separação.</p>
+                </div>
+                <div class="route active" data-route="4" role="button" tabindex="0">
+                    <span class="route-tag">Rota do protótipo</span>
+                    <h3>DAC — Captura Direta de Ar</h3>
+                    <p>Remove CO₂ diretamente do ar ambiente, não de uma chaminé específica. Pode ser instalada
+                        em qualquer lugar, mas exige mais energia por tonelada capturada, já que o CO₂ está muito
+                        mais diluído no ar (~0,04%) do que num gás de exaustão industrial (5–15%). É esta a
+                        tecnologia que nosso circuito representa.</p>
+                </div>
             </div>
-            <div class="route" data-route="2" role="button" tabindex="0">
-                <span class="route-tag">Rota 2</span>
-                <h3>Pós-combustão</h3>
-                <p>Os gases de exaustão de uma planta já em operação passam por um sistema de absorção
-                    química que remove o CO₂ depois da queima. É a rota mais fácil de adaptar a fábricas e
-                    usinas existentes.</p>
-            </div>
-            <div class="route" data-route="3" role="button" tabindex="0">
-                <span class="route-tag">Rota 3</span>
-                <h3>Oxicombustão</h3>
-                <p>O combustível é queimado em oxigênio quase puro em vez de ar comum, gerando um fluxo de
-                    exaustão majoritariamente composto por CO₂ — o que simplifica bastante a separação.</p>
-            </div>
-            <div class="route active" data-route="4" role="button" tabindex="0">
-                <span class="route-tag">Rota do protótipo</span>
-                <h3>DAC — Captura Direta de Ar</h3>
-                <p>Remove CO₂ diretamente do ar ambiente, não de uma chaminé específica. Pode ser instalada
-                    em qualquer lugar, mas exige mais energia por tonelada capturada, já que o CO₂ está muito
-                    mais diluído no ar (~0,04%) do que num gás de exaustão industrial (5–15%). É esta a
-                    tecnologia que nosso circuito representa.</p>
-            </div>
-        </div>
         </section>
 
         <!-- ===================== SIMULADOR + EXPLICAÇÃO ===================== -->
         <div class="grid">
+
+            <!-- BLOCO 1: STATUS DO SISTEMA -->
             <div class="card">
                 <h2>Status do Sistema <span class="live-tag">tempo real</span></h2>
-            
+
                 <div class="slider-container">
                     <label for="co2-range">
                         Simulador de Concentração de CO₂ <span class="pin-tag">Sensor · A0</span>
@@ -88,7 +90,7 @@
                         <span>1200</span>
                     </div>
                 </div>
-            
+
                 <div class="status-box" id="status-seguro">
                     <div>
                         <strong>Qualidade do Ar: Seguro</strong>
@@ -96,7 +98,7 @@
                     </div>
                     <div class="indicator" id="led-seguro"></div>
                 </div>
-            
+
                 <div class="status-box" id="status-atencao">
                     <div>
                         <strong>Captura Ativa: Filtragem em Processo</strong>
@@ -104,7 +106,7 @@
                     </div>
                     <div class="indicator" id="led-atencao"></div>
                 </div>
-            
+
                 <div class="status-box" id="status-critico">
                     <div>
                         <strong>Injeção Crítica: Compressão Geológica</strong>
@@ -112,28 +114,29 @@
                     </div>
                     <div class="indicator" id="led-critico"></div>
                 </div>
-            
+
                 <p class="footnote">
-                    A escala do simulador é calibrada para valores realistas de CO₂ atmosférico. No protótipo físico com Arduino, a leitura de tensão analógica (0 a 1023) é convertida para a escala de 350 a 1200 ppm.
+                    A escala do simulador é calibrada para valores realistas de CO₂ atmosférico. No protótipo físico com Arduino, a leitura de tensão analógica (0 a 1023) é convertida para a escala de 350 a 1200 ppm por meio de código.
                 </p>
             </div>
 
+            <!-- BLOCO 2: COMO O SISTEMA FUNCIONA -->
             <div class="card">
                 <h2>Como o Sistema Funciona?</h2>
-                <p>Selecione um componente para entender a relação entre a maquete e o sistema real de DAC:</p>
+                <p>Selecione uma etapa para entender a relação entre o protótipo e o processo industrial de DAC:</p>
 
                 <div class="interactive-diagram">
                     <button class="component-btn active" data-target="sensor">
-                        <span class="btn-num">01</span> Sensor de CO₂ <em>(sensor de umidade)</em>
+                        <span class="btn-num">Passo 01</span> Monitoramento &amp; Sensor <em>(A0)</em>
                     </button>
                     <button class="component-btn" data-target="servo1">
-                        <span class="btn-num">02</span> Válvula de Captura <em>(servo · pino 9)</em>
+                        <span class="btn-num">Passo 02</span> Adsorção e Filtração <em>(pino 9)</em>
                     </button>
                     <button class="component-btn" data-target="servo2">
-                        <span class="btn-num">03</span> Válvula de Injeção <em>(servo · pino 10)</em>
+                        <span class="btn-num">Passo 03</span> Regeneração e Compressão <em>(pino 10)</em>
                     </button>
                     <button class="component-btn" data-target="leds">
-                        <span class="btn-num">04</span> LEDs de Controle <em>(pinos 11, 12, 13)</em>
+                        <span class="btn-num">Passo 04</span> Injeção e Mineralização <em>(pinos 11-13)</em>
                     </button>
                 </div>
 
@@ -141,10 +144,10 @@
                     Selecione um item acima para ler a explicação correspondente.
                 </div>
             </div>
+
         </div>
 
-        <!-- ===================== VISTA ISOMÉTRICA (elemento assinatura) ===================== -->
-        <!-- ===================== VISTA ISOMÉTRICA (elemento assinatura) ===================== -->
+        <!-- ===================== VISTA ISOMÉTRICA (Infográfico Didático) ===================== -->
         <section class="card">
             <h2>Vista Isométrica da Instalação</h2>
             <p>
@@ -153,13 +156,13 @@
                 armazenamento no subsolo. O marcador acompanha o estado do simulador acima.
             </p>
             <div class="cross-section-wrap">
-                <svg id="cross-section" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vista isométrica da instalação de captura e injeção de carbono">
-        
+                <svg id="cross-section" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Infográfico didático da instalação de captura e injeção de carbono">
+
                     <!-- ===== bloco de terreno (isométrico) ===== -->
                     <polygon points="130,460 480,660 480,900 130,700" class="gnd-left" />
                     <polygon points="480,660 830,460 830,700 480,900" class="gnd-right" />
                     <polygon points="480,260 830,460 480,660 130,460" class="gnd-top" />
-        
+
                     <!-- janela de corte / reservatório subterrâneo -->
                     <polygon points="655,560 795,480 795,720 655,800" class="reservoir" id="reservoir" />
                     <path d="M 655,600 C 700,585 720,615 760,595 C 780,585 790,600 795,592" class="reservoir-crack" />
@@ -170,16 +173,16 @@
                         <circle cx="690" cy="720" r="4" class="mineral" />
                         <circle cx="745" cy="710" r="4" class="mineral" />
                     </g>
-        
+
                     <!-- poço de injeção -->
                     <line x1="725" y1="520" x2="725" y2="655" class="injection-pipe" id="injection-pipe" />
                     <circle cx="725" cy="514" r="8" class="well-cap" />
-        
+
                     <!-- ===== tubulações de ligação ===== -->
                     <path d="M 590,430 C 545,430 545,470 520,470" class="pipe-loop" />
                     <path d="M 650,380 C 690,380 690,440 700,460 C 705,470 710,490 710,520" class="pipe-loop" />
                     <path d="M 520,420 L 590,420" class="pipe-transfer" id="pipe-transfer" />
-        
+
                     <!-- ===== muro de ventiladores (fan wall) ===== -->
                     <polygon points="330,330 520,330 560,295 370,295" class="facility-roof" />
                     <polygon points="520,330 560,295 560,485 520,520" class="facility-side" />
@@ -209,29 +212,65 @@
                         <circle cx="495" cy="495" r="17" class="fan" />
                     </g>
                     <text x="425" y="545" class="facility-label" text-anchor="middle">Coletores DAC</text>
-        
+
                     <!-- ===== chaminé / torre de exaustão ===== -->
                     <rect x="450" y="150" width="30" height="145" class="stack-body" />
                     <line x1="450" y1="185" x2="480" y2="185" class="stack-rung" />
                     <line x1="450" y1="225" x2="480" y2="225" class="stack-rung" />
                     <line x1="450" y1="265" x2="480" y2="265" class="stack-rung" />
                     <rect x="443" y="105" width="44" height="52" rx="6" class="stack-cap" />
-        
+
                     <!-- ===== tanque de compressão ===== -->
                     <ellipse cx="620" cy="350" rx="30" ry="13" class="tank-cap" />
                     <rect x="590" y="350" width="60" height="170" rx="10" class="tank-body" />
                     <rect x="590" y="400" width="60" height="14" class="tank-band" />
                     <rect x="590" y="460" width="60" height="14" class="tank-band" />
                     <text x="620" y="545" class="facility-label" text-anchor="middle">Compressão</text>
-        
+
                     <!-- ===== marcador de CO2 ===== -->
                     <circle id="co2-marker" cx="465" cy="90" r="9" class="co2-marker" />
                     <text id="co2-marker-label" x="482" y="94" class="marker-label">CO₂</text>
-        
-                    <!-- ===== textos de identificação (posicionados no topo para evitar sobreposição) ===== -->
-                    <text x="30" y="60" class="facility-label">Atmosfera</text>
-                    <text x="810" y="475" class="facility-label" text-anchor="end">Formação basáltica</text>
-                    <text x="810" y="495" class="facility-label" text-anchor="end">≈ 1.000–2.000 m</text>
+
+                    <!-- ===== LINHAS INDICADORAS PONTILHADAS ===== -->
+                    <line x1="290" y1="245" x2="350" y2="350" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-dasharray="4 4" />
+                    <line x1="600" y1="185" x2="595" y2="380" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-dasharray="4 4" />
+                    <line x1="300" y1="745" x2="650" y2="680" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-dasharray="4 4" />
+                    <line x1="580" y1="545" x2="715" y2="545" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-dasharray="4 4" />
+
+                    <!-- ===== BALÃO INFORMATIVO 01 (CAPTURA) ===== -->
+                    <g transform="translate(30, 220)">
+                        <rect x="0" y="0" width="260" height="50" rx="8" fill="#12262f" stroke="#3ddc97" stroke-width="1.5" />
+                        <circle cx="25" cy="25" r="12" fill="#3ddc97" />
+                        <text x="25" y="29" fill="#0a1a1f" font-family="var(--font-mono)" font-size="13" font-weight="bold" text-anchor="middle">1</text>
+                        <text x="48" y="29" fill="#eaf3f0" font-family="var(--font-body)" font-size="13" font-weight="600">Captura e Filtração (DAC)</text>
+                    </g>
+
+                    <!-- ===== BALÃO INFORMATIVO 02 (COMPRESSÃO) ===== -->
+                    <g transform="translate(600, 160)">
+                        <rect x="0" y="0" width="260" height="50" rx="8" fill="#12262f" stroke="#f2b134" stroke-width="1.5" />
+                        <circle cx="25" cy="25" r="12" fill="#f2b134" />
+                        <text x="25" y="29" fill="#0a1a1f" font-family="var(--font-mono)" font-size="13" font-weight="bold" text-anchor="middle">2</text>
+                        <text x="48" y="29" fill="#eaf3f0" font-family="var(--font-body)" font-size="13" font-weight="600">Regeneração e Compressão</text>
+                    </g>
+
+                    <!-- ===== BALÃO INFORMATIVO 03 (INJEÇÃO) ===== -->
+                    <g transform="translate(40, 720)">
+                        <rect x="0" y="0" width="260" height="50" rx="8" fill="#12262f" stroke="#ff5d4a" stroke-width="1.5" />
+                        <circle cx="25" cy="25" r="12" fill="#ff5d4a" />
+                        <text x="25" y="29" fill="#0a1a1f" font-family="var(--font-mono)" font-size="13" font-weight="bold" text-anchor="middle">3</text>
+                        <text x="48" y="29" fill="#eaf3f0" font-family="var(--font-body)" font-size="13" font-weight="600">Injeção e Mineralização</text>
+                    </g>
+
+                    <!-- ===== ETIQUETAS DO AMBIENTE (CONTRATADAS) ===== -->
+                    <g transform="translate(580, 520)">
+                        <rect x="0" y="0" width="280" height="50" rx="8" fill="#17313c" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        <text x="15" y="30" fill="#9fb9bd" font-family="var(--font-mono)" font-size="12" font-weight="500">Rocha Basáltica (~1.000-2.000m)</text>
+                    </g>
+
+                    <g transform="translate(30, 40)">
+                        <rect x="0" y="0" width="120" height="36" rx="6" fill="#17313c" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+                        <text x="15" y="22" fill="#9fb9bd" font-family="var(--font-mono)" font-size="12" font-weight="500">Atmosfera</text>
+                    </g>
                 </svg>
             </div>
             <p class="footnote">
@@ -346,14 +385,14 @@
                         encontrar locais com geologia adequada para armazenamento seguro, e monitorar
                         continuamente para evitar vazamentos. Por fim, parte da comunidade científica alerta que
                         CCS pode ser usado para prolongar o uso de combustíveis fósseis, em vez de substituí-los
-                        por fontes limpas.
+                        por fontes limhas.
                     </p>
                 </div>
             </div>
         </section>
 
         <footer class="site-footer">
-            <p><code> · Eduardo Mascarenhas · Henoc Santos · João Pedro de Sousa · Lucas Silva · Maria Eduarda Carneiro · </code></p>
+            <p><code>Eduardo Mascarenhas &bull; Henoc Santos &bull; João Pedro Calixto &bull; Lucas Silva &bull; Maria Edruarda Carneiro</code></p>
         </footer>
 
     </div>
