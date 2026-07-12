@@ -95,6 +95,9 @@ body {
     border-radius: 14px;
     padding: 28px;
     margin-bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .card h2 {
@@ -129,11 +132,13 @@ body {
     color: var(--ink-dim);
     border-left: 3px solid var(--line);
     padding-left: 12px;
-    margin-top: 18px;
+    margin-top: auto;
     line-height: 1.55;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
-/* ===== Intro / rotas ===== */
+/* ===== Intro / Rotas de Carbono ===== */
 .routes {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -159,6 +164,11 @@ body {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
+.route:focus-visible {
+    border-color: var(--safe);
+    box-shadow: 0 0 0 2px var(--safe-dim);
+}
+
 .route-tag {
     font-family: var(--font-mono);
     font-size: 0.68rem;
@@ -180,56 +190,37 @@ body {
     margin: 0;
 }
 
-.route-highlight {
-    background: var(--safe-dim);
-    border-color: var(--safe);
-}
-
-.route-highlight .route-tag {
-    color: var(--safe);
-}
-
-.route:focus-visible {
-    border-color: var(--safe);
-    box-shadow: 0 0 0 2px var(--safe-dim);
-}
-
-/* Base de animação para os gradientes ativos */
+/* Gradientes das rotas quando ativas */
 .route.active {
     background-size: 200% 200%;
     animation: shiftGradient 8s ease infinite;
     transform: scale(1.02);
 }
 
-/* Rota 1 - Tom Azul Hidrogênio / Síntese */
 .route[data-route="1"].active {
     background-image: linear-gradient(135deg, #0c2035 0%, #163654 50%, #214e7a 100%);
     border-color: rgba(33, 78, 122, 0.5);
     box-shadow: 0 8px 20px rgba(12, 32, 53, 0.4);
 }
 
-/* Rota 2 - Tom Âmbar / Pós-combustão */
 .route[data-route="2"].active {
     background-image: linear-gradient(135deg, #301f11 0%, #4f321b 50%, #734927 100%);
     border-color: rgba(115, 73, 39, 0.5);
     box-shadow: 0 8px 20px rgba(48, 31, 17, 0.4);
 }
 
-/* Rota 3 - Tom Purpúreo / Oxicombustão de Alta Temperatura */
 .route[data-route="3"].active {
     background-image: linear-gradient(135deg, #2d1324 0%, #4a1d3a 50%, #6e2755 100%);
     border-color: rgba(110, 39, 85, 0.5);
     box-shadow: 0 8px 20px rgba(45, 19, 36, 0.4);
 }
 
-/* Rota 4 - Verde Esmeralda / DAC e Preservação */
 .route[data-route="4"].active {
     background-image: linear-gradient(135deg, #0a251c 0%, #124031 50%, #1e614b 100%);
     border-color: rgba(30, 97, 75, 0.6);
     box-shadow: 0 8px 20px rgba(10, 37, 28, 0.4);
 }
 
-/* Ajustes de contraste para o texto interno das seções ativas */
 .route.active h3 {
     color: #ffffff;
 }
@@ -242,7 +233,6 @@ body {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Animação suave de transição de gradiente */
 @keyframes shiftGradient {
     0% {
         background-position: 0% 50%;
@@ -269,12 +259,13 @@ body {
     }
 }
 
-/* ===== Grid principal ===== */
+/* ===== Grid Principal de Simulação ===== */
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 22px;
     margin-bottom: 22px;
+    align-items: stretch;
 }
 
 @media (max-width: 768px) {
@@ -394,7 +385,7 @@ body {
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-/* ===== Explicações interativas ===== */
+/* ===== Explicações Interativas ===== */
 .interactive-diagram {
     display: flex;
     flex-direction: column;
@@ -447,11 +438,32 @@ body {
     padding: 16px;
     background: var(--surface-2);
     border-radius: 10px;
-    min-height: 120px;
     font-size: 0.92rem;
     line-height: 1.65;
     color: var(--ink-dim);
     border-left: 3px solid var(--safe);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#explanation-box h3 {
+    margin: 4px 0 10px;
+    color: var(--ink);
+    font-size: 1.15rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+}
+
+#explanation-box p {
+    margin: 0 0 12px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+#explanation-box p:last-child {
+    margin-bottom: 0;
 }
 
 #explanation-box strong {
@@ -465,23 +477,99 @@ body {
     opacity: 0.85;
 }
 
-/* ===== Corte geológico ===== */
+/* ===== Vista Isométrica (SVG com suporte a Zoom) ===== */
 .cross-section-wrap {
-    max-width: 650px;
+    max-width: 850px;
     margin: 24px auto;
     border-radius: 10px;
     overflow: hidden;
     border: 1px solid var(--line);
+    cursor: zoom-in;
+    position: relative;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.cross-section-wrap:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Indicador visual de zoom no canto inferior direito */
+.cross-section-wrap::after {
+    content: "🔍 Clique para ampliar";
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(18, 38, 47, 0.9);
+    color: var(--ink-dim);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    border: 1px solid var(--line);
+}
+
+/* Estado Expandido (Zoom Ativo) */
+.cross-section-wrap.zoomed {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    z-index: 9999;
+    background: rgba(10, 26, 31, 0.97);
+    /* Fundo escurecido atrás do SVG */
+    cursor: zoom-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    border: none;
+    animation: fadeInModal 0.25s ease-out;
+}
+
+.cross-section-wrap.zoomed #cross-section {
+    max-width: 95%;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 10px 45px rgba(0, 0, 0, 0.6);
+}
+
+/* Altera o indicador visual para fechamento */
+.cross-section-wrap.zoomed::after {
+    content: "❌ Clique em qualquer lugar para fechar";
+    bottom: 24px;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 93, 74, 0.15);
+    border-color: var(--danger);
+    color: var(--ink);
+}
+
+@keyframes fadeInModal {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 #cross-section {
     display: block;
     width: 100%;
     height: auto;
-    background: #071319;
+    background: #0b1d24;
 }
 
-/* bloco de terreno */
+/* Bloco de terreno */
 .gnd-top {
     fill: #1d4a3c;
 }
@@ -494,7 +582,7 @@ body {
     fill: #241c14;
 }
 
-/* reservatório / janela de corte */
+/* Reservatório / Janela de corte */
 .reservoir {
     fill: #16302f;
     stroke: rgba(255, 255, 255, 0.12);
@@ -513,7 +601,7 @@ body {
     transition: opacity 0.6s ease;
 }
 
-/* poço de injeção */
+/* Poço de injeção */
 .injection-pipe {
     stroke: #4a5a5c;
     stroke-width: 6;
@@ -526,7 +614,7 @@ body {
     transition: fill 0.4s ease;
 }
 
-/* tubulações */
+/* Tubulações */
 .pipe-loop,
 .pipe-transfer {
     fill: none;
@@ -536,7 +624,7 @@ body {
     transition: stroke 0.4s ease;
 }
 
-/* muro de ventiladores */
+/* Muro de ventiladores */
 .facility-roof {
     fill: #d7e1df;
 }
@@ -568,7 +656,7 @@ body {
     filter: drop-shadow(0 0 4px var(--warning));
 }
 
-/* torre / chaminé */
+/* Torre / Chaminé */
 .stack-body {
     fill: #7c8a88;
 }
@@ -584,7 +672,7 @@ body {
     stroke-width: 2;
 }
 
-/* tanque */
+/* Tanque */
 .tank-body {
     fill: #b9c4c2;
     stroke: #8a9694;
@@ -681,7 +769,7 @@ body {
     }
 }
 
-/* ===== Tabela ===== */
+/* ===== Tabela de Equivalência ===== */
 .table-wrap {
     overflow-x: auto;
     margin-top: 16px;
@@ -713,7 +801,7 @@ td:nth-child(2) {
     color: var(--ink-dim);
 }
 
-/* ===== Contexto ===== */
+/* ===== Contexto Científico ===== */
 .context-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -740,7 +828,7 @@ td:nth-child(2) {
     }
 }
 
-/* ===== Footer ===== */
+/* ===== Rodapé ===== */
 .site-footer {
     text-align: center;
     color: var(--ink-dim);
