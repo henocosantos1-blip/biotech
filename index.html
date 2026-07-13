@@ -30,37 +30,28 @@
         <section class="card intro-card">
             <h2>O que é DAC?</h2>
             <p>
-                <em>DAC (<em>Direct Air Capture</em>) é uma tecnologia projetada para remover o dióxido de carbono (CO2) diretamente do ar ambiente em qualquer local. A tecnologia tem como objetivo reduzir ativamente a concentração de gases de efeito estufa no ar, ajudando a mitigar as mudanças climáticas.
+                <em>DAC (Direct Air Capture)</em> é uma tecnologia projetada para remover o dióxido de carbono (CO₂) diretamente do ar ambiente em qualquer local. A tecnologia tem como objetivo reduzir ativamente a concentração de gases de efeito estufa no ar, ajudando a mitigar as mudanças climáticas. Abaixo estão as duas principais vertentes tecnológicas utilizadas atualmente:
             </p>
 
             <div class="routes">
-                <div class="route" data-route="1" role="button" tabindex="0">
-                    <span class="route-tag">Rota 1</span>
-                    <h3>Pré-combustão</h3>
-                    <p>O combustível é convertido em gás de síntese (H₂ + CO₂) antes de ser queimado. O CO₂ é
-                        separado dessa mistura, e apenas o hidrogênio segue para a combustão. Usado em usinas de
-                        gaseificação de carvão.</p>
+                <div class="route active" data-route="1" role="button" tabindex="0">
+                    <span class="route-tag">Tecnologia Modular</span>
+                    <h3>DAC Sólido (S-DAC)</h3>
+                    <p>Essa tecnologia utiliza filtros químicos sólidos (geralmente matrizes porosas impregnadas com aminas) para prender o CO₂.</p>
+                    <p style="margin-top: 8px;"><strong>Como funciona:</strong> Grandes ventiladores empurram o ar ambiente através desses filtros sólidos. O CO₂ se liga quimicamente à superfície do filtro. Quando o filtro fica saturado, o sistema é fechado e aquecido a cerca de 80°C a 100°C sob vácuo para liberar o CO₂ puro e regenerar o filtro.</p>
+                    <p style="margin-top: 8px;"><strong>Vantagens:</strong> Exige temperaturas relativamente baixas, o que permite o uso de calor residual industrial ou energia geotérmica. Os sistemas costumam ser altamente modulares.</p>
+                    <p style="margin-top: 8px;"><strong>Desvantagens:</strong> Os filtros sólidos se desgastam com o tempo e precisam ser substituídos periodicamente.</p>
+                    <span class="pin-tag" style="display: block; margin-top: 12px; font-weight: 500;">Exemplo: Climeworks</span>
                 </div>
+
                 <div class="route" data-route="2" role="button" tabindex="0">
-                    <span class="route-tag">Rota 2</span>
-                    <h3>Pós-combustão</h3>
-                    <p>Os gases de exaustão de uma planta já em operação passam por um sistema de absorção
-                        química que remove o CO₂ depois da queima. É a rota mais fácil de adaptar a fábricas e
-                        usinas existentes.</p>
-                </div>
-                <div class="route" data-route="3" role="button" tabindex="0">
-                    <span class="route-tag">Rota 3</span>
-                    <h3>Oxicombustão</h3>
-                    <p>O combustível é queimado em oxigênio quase puro em vez de ar comum, gerando um fluxo de
-                        exaustão majoritariamente composto por CO₂ — o que simplifica bastante a separação.</p>
-                </div>
-                <div class="route active" data-route="4" role="button" tabindex="0">
-                    <span class="route-tag">Rota do protótipo</span>
-                    <h3>DAC — Captura Direta de Ar</h3>
-                    <p>Remove CO₂ diretamente do ar ambiente, não de uma chaminé específica. Pode ser instalada
-                        em qualquer lugar, mas exige mais energia por tonelada capturada, já que o CO₂ está muito
-                        mais diluído no ar (~0,04%) do que num gás de exaustão industrial (5–15%). É esta a
-                        tecnologia que nosso circuito representa.</p>
+                    <span class="route-tag">Alta Escala Industrial</span>
+                    <h3>DAC Líquido (L-DAC)</h3>
+                    <p>Essa abordagem utiliza uma solução líquida aquosa altamente alcalina (como hidróxido de potássio ou hidróxido de sódio) para capturar o carbono.</p>
+                    <p style="margin-top: 8px;"><strong>Como funciona:</strong> O ar passa por uma torre de contato onde o líquido "lava" o ar, reagindo com o CO₂ e transformando-o em um carbonato dissolvido. Depois, esse líquido passa por uma série de reações químicas até precipitar em pequenas pelotas sólidas de carbonato de cálcio. Essas pelotas são levadas a um calcinador e aquecidas a cerca de 900°C para liberar o CO₂.</p>
+                    <p style="margin-top: 8px;"><strong>Vantagens:</strong> O líquido não se desgasta como os filtros sólidos, permitindo uma operação contínua em altíssima escala sem perda de eficiência do reagente básico.</p>
+                    <p style="margin-top: 8px;"><strong>Desvantagens:</strong> Exige altas temperaturas, demandando uma grande quantidade de energia (geralmente obtida pela queima de gás natural).</p>
+                    <span class="pin-tag" style="display: block; margin-top: 12px; font-weight: 500;">Exemplo: Carbon Engineering (Oxy)</span>
                 </div>
             </div>
         </section>
@@ -380,14 +371,14 @@
                         encontrar locais com geologia adequada para armazenamento seguro, e monitorar
                         continuamente para evitar vazamentos. Por fim, parte da comunidade científica alerta que
                         CCS pode ser usado para prolongar o uso de combustíveis fósseis, em vez de substituí-los
-                        por fontes limhas.
+                        por fontes limpas.
                     </p>
                 </div>
             </div>
         </section>
 
         <footer class="site-footer">
-            <p><code>Eduardo Mascarenhas &bull; Henoc Santos &bull; João Pedro Calixto &bull; Lucas Silva &bull; Maria Edruarda Carneiro</code></p>
+            <p><code>Eduardo Mascarenhas &bull; Henoc Santos &bull; João Pedro Calixto &bull; Lucas Silva &bull; Maria Eduarda Carneiro</code></p>
         </footer>
 
     </div>
