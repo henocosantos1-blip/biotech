@@ -141,8 +141,8 @@ body {
 /* ===== Intro / Rotas de Carbono ===== */
 .routes {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
     margin-top: 22px;
 }
 
@@ -150,12 +150,14 @@ body {
     background: var(--surface-2);
     border: 1px solid var(--line);
     border-radius: 10px;
-    padding: 16px;
+    padding: 20px;
     cursor: pointer;
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
     position: relative;
     overflow: hidden;
     outline: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .route:hover {
@@ -172,21 +174,21 @@ body {
 .route-tag {
     font-family: var(--font-mono);
     font-size: 0.68rem;
-    color: var(--ink-dim);
+    color: var(--safe);
     text-transform: uppercase;
     letter-spacing: 0.06em;
 }
 
 .route h3 {
     font-family: var(--font-display);
-    margin: 8px 0 8px;
-    font-size: 1rem;
+    margin: 8px 0 12px;
+    font-size: 1.15rem;
 }
 
 .route p {
     font-size: 0.86rem;
     color: var(--ink-dim);
-    line-height: 1.5;
+    line-height: 1.55;
     margin: 0;
 }
 
@@ -194,31 +196,19 @@ body {
 .route.active {
     background-size: 200% 200%;
     animation: shiftGradient 8s ease infinite;
-    transform: scale(1.02);
+    transform: scale(1.01);
 }
 
 .route[data-route="1"].active {
-    background-image: linear-gradient(135deg, #0c2035 0%, #163654 50%, #214e7a 100%);
-    border-color: rgba(33, 78, 122, 0.5);
-    box-shadow: 0 8px 20px rgba(12, 32, 53, 0.4);
+    background-image: linear-gradient(135deg, #0a251c 0%, #124031 50%, #1e614b 100%);
+    border-color: rgba(30, 97, 75, 0.6);
+    box-shadow: 0 8px 20px rgba(10, 37, 28, 0.4);
 }
 
 .route[data-route="2"].active {
     background-image: linear-gradient(135deg, #301f11 0%, #4f321b 50%, #734927 100%);
     border-color: rgba(115, 73, 39, 0.5);
     box-shadow: 0 8px 20px rgba(48, 31, 17, 0.4);
-}
-
-.route[data-route="3"].active {
-    background-image: linear-gradient(135deg, #2d1324 0%, #4a1d3a 50%, #6e2755 100%);
-    border-color: rgba(110, 39, 85, 0.5);
-    box-shadow: 0 8px 20px rgba(45, 19, 36, 0.4);
-}
-
-.route[data-route="4"].active {
-    background-image: linear-gradient(135deg, #0a251c 0%, #124031 50%, #1e614b 100%);
-    border-color: rgba(30, 97, 75, 0.6);
-    box-shadow: 0 8px 20px rgba(10, 37, 28, 0.4);
 }
 
 .route.active h3 {
@@ -229,8 +219,12 @@ body {
     color: var(--ink);
 }
 
+.route.active p strong {
+    color: #ffffff;
+}
+
 .route.active .route-tag {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.85);
 }
 
 @keyframes shiftGradient {
@@ -247,13 +241,7 @@ body {
     }
 }
 
-@media (max-width: 900px) {
-    .routes {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 560px) {
+@media (max-width: 768px) {
     .routes {
         grid-template-columns: 1fr;
     }
@@ -521,7 +509,6 @@ body {
     border-radius: 0;
     z-index: 9999;
     background: rgba(10, 26, 31, 0.97);
-    /* Fundo escurecido atrás do SVG */
     cursor: zoom-out;
     display: flex;
     align-items: center;
